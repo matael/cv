@@ -634,7 +634,7 @@
 		backend=biber,bibencoding=ascii,%
 		language=auto,%
 		style=authoryear,%
-    sorting=ynt, % name, year, title
+    sorting=ydnt, % name, year, title
     maxbibnames=10, % default: 3, et al.
     natbib=true, % natbib compatibility mode (\citep and \citet still work)
 		doi=true, isbn=false, url=false
