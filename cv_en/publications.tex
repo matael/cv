@@ -1,0 +1,46 @@
+\newpage
+%-------------------------------------------------------------------------------
+%	SECTION TITLE
+%-------------------------------------------------------------------------------
+\cvsection{Publications}
+\nocite{*}
+
+%-------------------------------------------------------------------------------
+%	CONTENT
+%-------------------------------------------------------------------------------
+
+\newcounter{mycounter}
+\defbibcheck{intheyear}{
+  \iffieldint{year}
+    {\ifnumequal{\thefield{year}}{\themycounter}
+      {}
+      {\skipentry}}
+    {\skipentry}}
+\defbibenvironment{counting}{
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-2mm}
+  \begin{center}
+    \setlength\tabcolsep{0pt}
+    \setlength{\extrarowheight}{0pt}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+	}{%
+			\end{tabular*}
+		\end{center}
+	}{\xifinlist{\thefield{year}}{\yearlist}
+		{}
+		{\listxadd{\yearlist}{\thefield{year}}}
+	}
+\gdef\yearlist{}%
+\begingroup%
+  \makeatletter%
+  \def\blx@driver#1{}%
+  \printbibliography[env=counting,heading=none]%
+  \makeatother%
+\endgroup%
+\renewcommand*{\do}[1]{%
+  \setcounter{mycounter}{#1}%
+  \printbibliography[title=#1
+  ,heading=subbibliography
+  ,check = intheyear
+  ]}
+\dolistloop{\yearlist}

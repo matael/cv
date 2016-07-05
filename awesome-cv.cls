@@ -629,6 +629,45 @@
   \vspace{-4.0mm}
 }
 
+% Biblatex w/biber
+\PassOptionsToPackage{%
+		backend=biber,bibencoding=ascii,%
+		language=auto,%
+		style=authoryear,%
+    sorting=ynt, % name, year, title
+    maxbibnames=10, % default: 3, et al.
+    natbib=true, % natbib compatibility mode (\citep and \citet still work)
+		doi=true, isbn=false, url=false
+}{biblatex}
+    \usepackage{biblatex}
+
+\AtEveryCitekey{%
+	\clearfield{url}%
+	\clearfield{file}%
+	\clearfield{urlyear}%
+}
+
+\renewbibmacro*{publisher+location+date}{%from standard.bbx
+	\printlist{location}%
+	\setunit*{\addperiod\space}
+	\newunit}
+\DeclareFieldFormat[article, inproceedings, document, thesis]{title}{\bf #1\isdot}
+
+\newcommand{\makeauthorbold}[1]{%
+\DeclareNameFormat{author}{%
+	\ifnumequal{\value{listcount}}{1}
+		{\ifnumequal{\value{liststop}}{1}
+			{\expandafter\ifstrequal{##1}{#1}{\textcolor{awesome}{\textbf{##4##2}\addcomma\isdot}}{##3\addspace ##1\addcomma\isdot}}
+			{\expandafter\ifstrequal{##1}{#1}{\textcolor{awesome}{\textbf{##4##2}}}{##3\addspace ##1}}}
+		{\ifnumless{\value{listcount}}{\value{liststop}}
+			{\expandafter\ifstrequal{##1}{#1}{\addcomma\addspace \textcolor{awesome}{\textbf{##4##2}}}{\addcomma\addspace ##3\addspace ##1}}
+			{\expandafter\ifstrequal{##1}{#1}{\addcomma\addspace \textcolor{awesome}{\textbf{##4##2}\addcomma\isdot}}{\addcomma\addspace ##3\addspace ##1\addcomma\isdot}}%
+		}%
+}%
+}
+
+
+
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
@@ -680,3 +719,5 @@
       \letterenclosurestyle{\@letterenclname: \@letterenclosure} \\
     }
 }
+
+
