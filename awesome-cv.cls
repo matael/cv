@@ -651,21 +651,18 @@
 	\printlist{location}%
 	\setunit*{\addperiod\space}
 	\newunit}
+% do not print year
+\renewbibmacro*{date+extrayear}{}
 \DeclareFieldFormat[article, inproceedings, document, thesis]{title}{\bf #1\isdot}
 
-\newcommand{\makeauthorbold}[1]{%
+\DeclareNameAlias{sortname}{last-first}
 \DeclareNameFormat{author}{%
-	\ifnumequal{\value{listcount}}{1}
-		{\ifnumequal{\value{liststop}}{1}
-			{\expandafter\ifstrequal{##1}{#1}{\textcolor{awesome}{\textbf{##4##2}\addcomma\isdot}}{##3\addspace ##1\addcomma\isdot}}
-			{\expandafter\ifstrequal{##1}{#1}{\textcolor{awesome}{\textbf{##4##2}}}{##3\addspace ##1}}}
-		{\ifnumless{\value{listcount}}{\value{liststop}}
-			{\expandafter\ifstrequal{##1}{#1}{\addcomma\addspace \textcolor{awesome}{\textbf{##4##2}}}{\addcomma\addspace ##3\addspace ##1}}
-			{\expandafter\ifstrequal{##1}{#1}{\addcomma\addspace \textcolor{awesome}{\textbf{##4##2}\addcomma\isdot}}{\addcomma\addspace ##3\addspace ##1\addcomma\isdot}}%
-		}%
-}%
-}
-
+\ifthenelse{\equal{\namepartfamily}{Gaborit}}%
+{\textcolor{awesome}{\textbf{\namepartgiveni\namepartfamilyi}}}%
+{\namepartgiveni\addspace \namepartfamily}%
+\ifthenelse{\value{listcount}<\value{liststop}}%
+{\addcomma\space}
+{\ifthenelse{\ifmorenames}{~et\,al\adddot}}{}}
 
 
 
